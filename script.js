@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollEffects();
     initAnimations();
     initPhoneMask();
+    initSupportModal();
     
     console.log('✅ Página IPTV carregada com sucesso!');
 });
@@ -540,6 +541,191 @@ document.addEventListener('click', function(e) {
     }
 });
 
-console.log('📱 Script IPTV carregado - Versão 1.0');
-console.log('🎯 Funcionalidades ativas: Menu Mobile, Validação, Scroll Suave, Animações');
+// ==========================================
+// MODAL DE SUPORTE/DÚVIDAS
+// ==========================================
+function initSupportModal() {
+    const modal = document.getElementById('supportModal');
+    const openModalBtn = document.querySelector('.contact-btn');
+    const closeModalBtn = document.querySelector('.close-modal');
+    const modalBackdrop = document.querySelector('.modal-backdrop');
+    const supportForm = document.getElementById('supportForm');
+    
+    if (!modal || !openModalBtn) {
+        console.warn('⚠️ Elementos do modal de suporte não encontrados');
+        return;
+    }
+    
+    // Abre o modal
+    function openModal() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Foca no primeiro campo
+        setTimeout(() => {
+            const firstInput = modal.querySelector('input[type="text"]');
+            if (firstInput) firstInput.focus();
+        }, 300);
+    }
+    
+    // Fecha o modal
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Limpa o formulário
+        if (supportForm) {
+            supportForm.reset();
+            clearSupportFormErrors();
+        }
+    }
+    
+    // Event listeners
+    openModalBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+        trackEvent('support_modal_opened');
+    });
+    
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+    
+    if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', closeModal);
+    }
+    
+    // Fecha modal com ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+    
+    // Validação e submissão do formulário de suporte
+    if (supportForm) {
+        supportForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleSupportFormSubmit();
+        });
+    }
+    
+    function handleSupportFormSubmit() {
+        const nameInput = document.getElementById('supportName');
+        const emailInput = document.getElementById('supportEmail');
+        const categorySelect = document.getElementById('supportCategory');
+        const messageInput = document.getElementById('supportMessage');
+        
+        // Validação
+        let isValid = true;
+        
+        // Valida nome
+        if (!nameInput.value.trim() || nameInput.value.trim().length < 2) {
+            showSupportFieldError('supportNameError', 'Nome deve ter pelo menos 2 caracteres');
+            isValid = false;
+        } else {
+            clearSupportFieldError('supportNameError');
+        }
+        
+        // Valida email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value.trim())) {
+            showSupportFieldError('supportEmailError', 'Email inválido');
+            isValid = false;
+        } else {
+            clearSupportFieldError('supportEmailError');
+        }
+        
+        // Valida categoria
+        if (!categorySelect.value) {
+            showSupportFieldError('supportCategoryError', 'Selecione uma categoria');
+            isValid = false;
+        } else {
+            clearSupportFieldError('supportCategoryError');
+        }
+        
+        // Valida mensagem
+        if (!messageInput.value.trim() || messageInput.value.trim().length < 10) {
+            showSupportFieldError('supportMessageError', 'Mensagem deve ter pelo menos 10 caracteres');
+            isValid = false;
+        } else {
+            clearSupportFieldError('supportMessageError');
+        }
+        
+        if (isValid) {
+            submitSupportForm();
+        }
+    }
+    
+    function submitSupportForm() {
+        const submitBtn = supportForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Loading state
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        
+        // Coleta dados
+        const name = document.getElementById('supportName').value.trim();
+        const email = document.getElementById('supportEmail').value.trim();
+        const category = document.getElementById('supportCategory').value;
+        const categoryText = document.getElementById('supportCategory').options[document.getElementById('supportCategory').selectedIndex].text;
+        const message = document.getElementById('supportMessage').value.trim();
+        
+        // Cria mensagem para WhatsApp
+        let whatsappMessage = `🆘 *SUPORTE IPTV* 🆘\n\n`;
+        whatsappMessage += `👤 *Cliente:* ${name}\n`;
+        whatsappMessage += `📧 *Email:* ${email}\n`;
+        whatsappMessage += `📂 *Categoria:* ${categoryText}\n\n`;
+        whatsappMessage += `💬 *Dúvida/Problema:*\n${message}\n\n`;
+        whatsappMessage += `⏰ *Horário:* ${new Date().toLocaleString('pt-BR')}\n\n`;
+        whatsappMessage += `🙏 Aguardo retorno para resolver essa questão!`;
+        
+        // URL do WhatsApp
+        const whatsappUrl = `https://wa.me/5561991958961?text=${encodeURIComponent(whatsappMessage)}`;
+        
+        // Simula envio e redireciona
+        setTimeout(() => {
+            // Restaura botão
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            
+            // Fecha modal
+            closeModal();
+            
+            // Redireciona para WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Tracking
+            trackEvent('support_form_submitted', { category: category });
+            
+        }, 1500);
+    }
+    
+    function showSupportFieldError(errorId, message) {
+        const errorElement = document.getElementById(errorId);
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+    }
+    
+    function clearSupportFieldError(errorId) {
+        const errorElement = document.getElementById(errorId);
+        if (errorElement) {
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+        }
+    }
+    
+    function clearSupportFormErrors() {
+        const errorIds = ['supportNameError', 'supportEmailError', 'supportCategoryError', 'supportMessageError'];
+        errorIds.forEach(id => clearSupportFieldError(id));
+    }
+    
+    console.log('✅ Modal de suporte inicializado');
+}
+
+console.log('📱 Script IPTV carregado - Versão 1.1');
+console.log('🎯 Funcionalidades ativas: Menu Mobile, Validação, Scroll Suave, Animações, Modal Suporte');
 console.log('💡 Para suporte: contato@iptvpremium.com');
