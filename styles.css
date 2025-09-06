@@ -62,7 +62,7 @@ body {
 
 .btn-primary {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-    color: white;
+    color: rgb(255, 255, 255);
     box-shadow: var(--shadow-md);
 }
 
@@ -79,7 +79,7 @@ body {
 
 .btn-secondary:hover {
     background: var(--primary-color);
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .btn-outline {
@@ -695,6 +695,7 @@ body {
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--border-color);
 }
+
 
 .contact-form h3 {
     font-size: 1.5rem;

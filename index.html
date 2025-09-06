@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPTV Premium - Milhares de Canais em HD</title>
+    <title>Guma - Milhares de Canais em Ao Vivo</title>
     <meta name="description" content="IPTV Premium com mais de 10.000 canais em HD, filmes, séries e esportes ao vivo. Teste grátis por 24 horas!">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    Mais de <span class="highlight">10.000 Canais</span><br>
+                    Mais de <span class="highlight">2.000 Canais ao Vivo</span><br>
                     em Alta Definição
                 </h1>
                 <p class="hero-description">
@@ -59,11 +59,11 @@
                 <div class="hero-features">
                     <div class="feature-item">
                         <span class="feature-icon">📺</span>
-                        <span>10.000+ Canais</span>
+                        <span>2.000+ Canais</span>
                     </div>
                     <div class="feature-item">
                         <span class="feature-icon">🎬</span>
-                        <span>Filmes e Séries</span>
+                        <span>30.000+ Filmes e Séries</span>
                     </div>
                     <div class="feature-item">
                         <span class="feature-icon">⚽</span>
@@ -166,7 +166,7 @@
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✅ 10.000+ Canais HD/4K</li>
+                        <li>✅ 2.000+ Canais ao Vivo HD/4K</li>
                         <li>✅ Filmes e Séries</li>
                         <li>✅ 1 Tela Simultânea</li>
                         <li>✅ Todos os Esportes</li>
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✅ 10.000+ Canais HD/4K</li>
+                        <li>✅ 2.000+ Canais ao Vivo HD/4K</li>
                         <li>✅ Filmes e Séries</li>
                         <li>✅ 2 Telas Simultâneas</li>
                         <li>✅ Todos os Esportes</li>
@@ -209,7 +209,7 @@
                         </div>
                     </div>
                     <ul class="pricing-features">
-                        <li>✅ 10.000+ Canais HD/4K</li>
+                        <li>✅ 2.000+ Canais ao Vivo HD/4K</li>
                         <li>✅ Filmes e Séries</li>
                         <li>✅ 3 Telas Simultâneas</li>
                         <li>✅ Todos os Esportes</li>
@@ -348,6 +348,7 @@
                             <label for="plan">Plano de interesse</label>
                             <select id="plan" name="plan" required>
                                 <option value="">Selecione um plano</option>
+                                <option value="1tela">Teste Grátis</option>
                                 <option value="1tela">Plano Mensal 1 Tela - R$ 24,90/mês</option>
                                 <option value="2telas">Plano Mensal 2 Telas - R$ 34,90/mês</option>
                                 <option value="3telas">Plano Mensal 3 Telas - R$ 44,90/mês</option>
@@ -436,53 +437,6 @@
             <span class="whatsapp-icon">💬</span>
             <span class="whatsapp-text">Fale Conosco</span>
         </a>
-    </div>
-
-    <!-- Modal de Dúvidas -->
-    <div id="supportModal" class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>Tire suas dúvidas sobre IPTV</h3>
-                <button class="modal-close" id="closeModal">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <form id="supportForm" class="support-form">
-                    <div class="form-group">
-                        <label for="supportName">Nome completo</label>
-                        <input type="text" id="supportName" name="name" required placeholder="Digite seu nome">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="supportEmail">Email</label>
-                        <input type="email" id="supportEmail" name="email" required placeholder="seu@email.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="supportCategory">Categoria da dúvida</label>
-                        <select id="supportCategory" name="category" required>
-                            <option value="">Selecione uma categoria</option>
-                            <option value="planos">Planos e Preços</option>
-                            <option value="instalacao">Instalação e Configuração</option>
-                            <option value="suporte">Suporte Técnico</option>
-                            <option value="canais">Canais Disponíveis</option>
-                            <option value="dispositivos">Dispositivos Compatíveis</option>
-                            <option value="outros">Outros</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="supportMessage">Sua dúvida</label>
-                        <textarea id="supportMessage" name="message" required rows="4" placeholder="Descreva sua dúvida em detalhes..."></textarea>
-                    </div>
-                    
-                    <div class="modal-actions">
-                        <button type="button" class="btn btn-secondary" id="cancelSupport">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Enviar Dúvida</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 
     <!-- Script JavaScript -->
